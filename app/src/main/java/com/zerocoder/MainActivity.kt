@@ -1,0 +1,21 @@
+package com.zerocoder
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        lifecycle.addObserver(NewObserver())
+        Log.d("MAIN","Activity - ON CREATE")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("MAIN","Activity - ON REsume")
+    }
+
+}
