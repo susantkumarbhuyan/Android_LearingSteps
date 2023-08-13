@@ -8,6 +8,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 
 class Observer: LifecycleObserver {
+
+    //This one is deprecated from java 8
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate(){
         Log.d("MAIN","Observer - ON CREATE")
