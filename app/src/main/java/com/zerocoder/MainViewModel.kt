@@ -3,9 +3,9 @@ package com.zerocoder
 import android.view.View
 import androidx.lifecycle.ViewModel
 
-class MainViewModel: ViewModel() {
+class MainViewModel( val counter:Int): ViewModel() {
 
-    var count: Int = 0
+    var count: Int = counter
     fun increament() {
         count++
     }
