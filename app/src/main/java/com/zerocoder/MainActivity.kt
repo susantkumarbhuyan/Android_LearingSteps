@@ -9,13 +9,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        lifecycle.addObserver(NewObserver())
-        Log.d("MAIN","Activity - ON CREATE")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("MAIN","Activity - ON REsume")
     }
 
 }
