@@ -1,21 +1,27 @@
 package com.zerocoder
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.zerocoder.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        lifecycle.addObserver(NewObserver())
-        Log.d("MAIN","Activity - ON CREATE")
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        binding.qt = mainViewModel
+        binding.lifecycleOwner = this
+
+
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d("MAIN","Activity - ON REsume")
-    }
 
 }
