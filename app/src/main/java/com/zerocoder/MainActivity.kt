@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         database = ContactDatabase.getDB(this)!!
 
         GlobalScope.launch {
-            database.contactDao().insertContact(Contact(0, "Susant", "9090", Date()))
+            database.contactDao().insertContact(Contact(0, "Susant", "9090", Date(), 2))
         }
         binding.btn.setOnClickListener {
             database.contactDao().getContact().observe(this) {
