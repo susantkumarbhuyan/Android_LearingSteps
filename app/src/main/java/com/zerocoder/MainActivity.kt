@@ -12,6 +12,7 @@ import com.zerocoder.api.QuoteService
 import com.zerocoder.api.RetrofirHelper
 
 import com.zerocoder.databinding.ActivityMainBinding
+import com.zerocoder.repository.BaseResponse
 import com.zerocoder.repository.QuoteRepository
 import com.zerocoder.viewmodel.MainVIewModelFactory
 import com.zerocoder.viewmodel.MainViewModel
@@ -32,8 +33,26 @@ class MainActivity : AppCompatActivity() {
         )[MainViewModel::class.java]
 
         mainViewModel.quotes.observe(this) {
-            Toast.makeText(this@MainActivity, it.results.size.toString(), Toast.LENGTH_SHORT).show()
-            Log.d("MYDATA", it.results.toString())
+            when (it) {
+                is BaseResponse.Success -> {
+                    it.data?.let {
+                        Toast.makeText(
+                            this@MainActivity,
+                            it.results.size.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                }
+
+                is BaseResponse.Error -> {
+
+                    Toast.makeText(this@MainActivity, "Some Error Occured", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                is BaseResponse.Loading -> {}
+            }
         }
 
 

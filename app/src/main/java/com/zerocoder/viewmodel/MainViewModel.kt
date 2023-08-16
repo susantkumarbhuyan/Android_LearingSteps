@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zerocoder.model.QuoteList
+import com.zerocoder.repository.BaseResponse
 import com.zerocoder.repository.QuoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,6 +16,6 @@ class MainViewModel(private val repository: QuoteRepository):ViewModel() {
         }
     }
 
-    val quotes :LiveData<QuoteList>
+    val quotes :LiveData<BaseResponse<QuoteList>>
         get() = repository.quotes
 }
