@@ -1,12 +1,20 @@
 package com.zerocoder
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.zerocoder.api.QuoteService
+import com.zerocoder.api.RetrofirHelper
 
 import com.zerocoder.databinding.ActivityMainBinding
+import com.zerocoder.repository.QuoteRepository
+import com.zerocoder.viewmodel.MainVIewModelFactory
+import com.zerocoder.viewmodel.MainViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,23 +25,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        val dao = QuoteDatabase.getDB(applicationContext).quoteDao()
-
-        val quoteRepository = QuoteRepository(dao)
+        val repository = (application as QuoteApplication).quoteRepository
         mainViewModel = ViewModelProvider(
             this,
-            MainViewModelFactory(quoteRepository)
+            MainVIewModelFactory(repository)
         )[MainViewModel::class.java]
 
-        mainViewModel.getQuote().observe(this) {
-            binding.quotes = it.toString()
+        mainViewModel.quotes.observe(this) {
+            Toast.makeText(this@MainActivity, it.results.size.toString(), Toast.LENGTH_SHORT).show()
+            Log.d("MYDATA", it.results.toString())
         }
 
-        binding.btnAddQuote.setOnClickListener {
-            val quote = Quote(0, "This is Testing", "Testing")
-            mainViewModel.insertQuote(quote)
-        }
 
     }
 
