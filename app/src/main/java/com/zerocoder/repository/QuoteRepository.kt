@@ -1,6 +1,7 @@
 package com.zerocoder.repository
 
 import android.content.Context
+import androidx.core.math.MathUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zerocoder.NetworkUtil
@@ -31,8 +32,15 @@ class QuoteRepository(
             quoteLiveData.postValue(quoteList)
 
         }
+    }
 
+    suspend fun getQuotesInBackGround(){
+        val randomNumber :Int = (Math.random()*10).toInt()
+        val result = quoteService.getQuotes(randomNumber)
+        if (result.body() != null) {
+            quoteDb.quoteDao().addQuotes(result.body()!!.results)
 
+        }
     }
 
 }
