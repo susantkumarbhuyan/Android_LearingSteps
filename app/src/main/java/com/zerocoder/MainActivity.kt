@@ -8,28 +8,26 @@ import android.widget.Toast
 
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.zerocoder.api.QuoteService
-import com.zerocoder.api.RetrofirHelper
+
 
 import com.zerocoder.databinding.ActivityMainBinding
 import com.zerocoder.repository.BaseResponse
-import com.zerocoder.repository.QuoteRepository
-import com.zerocoder.viewmodel.MainVIewModelFactory
+
 import com.zerocoder.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel: MainViewModel
     lateinit var binding: ActivityMainBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        val repository = (application as QuoteApplication).quoteRepository
+
         mainViewModel = ViewModelProvider(
-            this,
-            MainVIewModelFactory(repository)
+            this
         )[MainViewModel::class.java]
 
         mainViewModel.quotes.observe(this) {
@@ -41,22 +39,17 @@ class MainActivity : AppCompatActivity() {
                             it.results.size.toString(),
                             Toast.LENGTH_SHORT
                         ).show()
-
                     }
                 }
-
                 is BaseResponse.Error -> {
-
                     Toast.makeText(this@MainActivity, "Some Error Occured", Toast.LENGTH_SHORT)
                         .show()
                 }
-
-                is BaseResponse.Loading -> {}
+                is BaseResponse.Loading -> {Toast.makeText(this@MainActivity, "Loading", Toast.LENGTH_SHORT)
+                    .show()}
+                else -> {Toast.makeText(this@MainActivity, "Server Error", Toast.LENGTH_SHORT)
+                    .show()}
             }
         }
-
-
     }
-
-
 }

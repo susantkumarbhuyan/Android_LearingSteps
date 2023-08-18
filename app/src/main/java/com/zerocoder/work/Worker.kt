@@ -11,9 +11,9 @@ import kotlinx.coroutines.launch
 class QuoteWorker(private val context: Context, parameters: WorkerParameters) :
     Worker(context, parameters) {
     override fun doWork(): Result {
-        val repository = (context as QuoteApplication).quoteRepository
+
         CoroutineScope(Dispatchers.IO).launch {
-            repository.getQuotesInBackGround()
+//            repository.getQuotesInBackGround()
         }
         return Result.success()
     }

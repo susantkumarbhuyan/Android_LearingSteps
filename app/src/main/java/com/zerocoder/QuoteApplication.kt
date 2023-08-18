@@ -5,20 +5,20 @@ import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-import com.zerocoder.api.QuoteService
-import com.zerocoder.api.RetrofirHelper
-import com.zerocoder.db.QuoteDb
-import com.zerocoder.repository.QuoteRepository
 import com.zerocoder.work.QuoteWorker
+import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
+@HiltAndroidApp
 class QuoteApplication : Application() {
 
-    lateinit var quoteRepository: QuoteRepository
+    @Inject
+    lateinit var userRepository: UserRepository
     override fun onCreate() {
         super.onCreate()
-        initilize()
         setWorker()
+        userRepository.saveUser("Susant", "Sisant")
     }
 
     private fun setWorker() {
@@ -29,9 +29,4 @@ class QuoteApplication : Application() {
         WorkManager.getInstance(this).enqueue(workerRequest)
     }
 
-    private fun initilize() {
-        val quoteService = RetrofirHelper.getInstance().create(QuoteService::class.java)
-        val quoteDb = QuoteDb.getQuoteDB(applicationContext)
-        quoteRepository = QuoteRepository(quoteService, quoteDb, applicationContext)
-    }
 }
