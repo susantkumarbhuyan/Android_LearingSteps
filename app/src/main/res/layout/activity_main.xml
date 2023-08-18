@@ -27,7 +27,7 @@
                 android:layout_margin="32dp"
                 android:text="InsertQuote" />
 
-            <TextView
+            <androidx.compose.ui.platform.ComposeView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="32dp"

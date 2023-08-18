@@ -13,12 +13,11 @@ import javax.inject.Inject
 @HiltAndroidApp
 class QuoteApplication : Application() {
 
-    @Inject
-    lateinit var userRepository: UserRepository
+
     override fun onCreate() {
         super.onCreate()
         setWorker()
-        userRepository.saveUser("Susant", "Sisant")
+
     }
 
     private fun setWorker() {
